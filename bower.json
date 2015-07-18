@@ -1,0 +1,9 @@
+{
+  "name": "pixi-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "almond": "~0.2.7",
+    "pixi": "~1.4.3"
+  }
+}
+
