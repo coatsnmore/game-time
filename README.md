@@ -1,4 +1,6 @@
-# build
+# Basic Game Pixi Template
 
-npm install
-bower install
+
+## Build
+  npm install
+  bower install
