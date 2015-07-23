@@ -2,6 +2,7 @@ module.exports = function(grunt) {
 
   var pkgFile = grunt.file.readJSON('package.json');
   var srcFiles = ['src/**/*.js'];
+  var orderedTasks = ['jshint', 'clean', 'amd_tamer', 'uglify'];
 
   grunt.initConfig({
     pkg: pkgFile,
@@ -28,7 +29,7 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: srcFiles,
-        tasks: ['jshint'],
+        tasks: orderedTasks,
         options: {
           spawn: false,
         },
@@ -38,6 +39,6 @@ module.exports = function(grunt) {
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  grunt.registerTask('default', 'Default task', ['clean', 'amd_tamer', 'uglify', 'jshint']);
+  grunt.registerTask('default', 'Default task', orderedTasks);
 
 };
