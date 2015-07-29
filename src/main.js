@@ -21,6 +21,10 @@ define(['pixi'], function(PIXI) {
             if (Math.abs(thisPlayer.velocity) < 0.1) {
                 thisPlayer.velocity = 0;
             }
+            thisPlayer.velocityY = thisPlayer.velocityY * 0.93;
+            if (Math.abs(thisPlayer.velocityY) < 0.1) {
+                thisPlayer.velocityY = 0;
+            }
         };
 
         Player.prototype.right = function() {
@@ -42,6 +46,28 @@ define(['pixi'], function(PIXI) {
                 }
 
                 thisPlayer.velocity = thisPlayer.velocity * 1.5;
+            }
+        };
+
+        Player.prototype.down = function() {
+
+            if (thisPlayer.velocityY >= 0 || thisPlayer.velocityY >= -0.5) {
+                if (thisPlayer.velocityY <= 2) {
+                    thisPlayer.velocityY = 2;
+                }
+
+                thisPlayer.velocityY = thisPlayer.velocityY * 1.5;
+            }
+        };
+
+        Player.prototype.up = function() {
+
+            if (thisPlayer.velocityY <= 0 || thisPlayer.velocityY <= 0.5) {
+                if (thisPlayer.velocityY >= -2) {
+                    thisPlayer.velocityY = -2;
+                }
+
+                thisPlayer.velocityY = thisPlayer.velocityY * 1.5;
             }
         };
 
@@ -95,7 +121,6 @@ define(['pixi'], function(PIXI) {
 
     var manTexture = PIXI.Texture.fromImage("assets/man.png");
     var man = new PIXI.Sprite(manTexture);
-    var xpos = man.position.x;
     var player = new Player(man);
 
     stage.addChild(man);
@@ -104,18 +129,9 @@ define(['pixi'], function(PIXI) {
         requestAnimFrame(animate);
 
         //move player
-        // var actualVelocity = player.getVelocity();
         player.applyFriction();
-        // man.position.x += actualVelocity;
         man.position.x += player.getVelocity();
         man.position.y += player.getVelocityY();
-
-        // if (xpos != man.position.x) {
-        //     xpos = man.position.x;
-        //     console.log("man.position.x: " + man.position.x);
-        //     console.log("veloctiy: " + player.velocity);
-        // }
-
         renderer.render(stage);
     }
 
@@ -167,6 +183,8 @@ define(['pixi'], function(PIXI) {
         var keyMap = {
             37: player.left,
             39: player.right,
+            38: player.up,
+            40: player.down,
             32: player.jump
         };
 
